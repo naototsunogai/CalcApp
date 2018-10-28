@@ -9,6 +9,7 @@ import android.widget.EditText;
 import java.math.BigDecimal;
 import android.support.design.widget.Snackbar;
 import java.lang.String;
+import java.math.RoundingMode;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -62,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }else if (v.getId() == R.id.button3) {
                 value = bd1.multiply(bd2);
             }else if (v.getId() == R.id.button4) {
-                value = bd1.divide(bd1,5);
+                value = bd1.divide(bd2, 14, BigDecimal.ROUND_HALF_UP);
+                value = value.stripTrailingZeros();
             }
 
             Intent intent = new Intent(this, SecondActivity.class);
