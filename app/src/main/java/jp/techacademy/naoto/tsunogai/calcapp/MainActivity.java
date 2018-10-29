@@ -1,6 +1,8 @@
 package jp.techacademy.naoto.tsunogai.calcapp;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -63,16 +65,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }else if (v.getId() == R.id.button3) {
                 value = bd1.multiply(bd2);
             }else if (v.getId() == R.id.button4) {
-                value = bd1.divide(bd2, 14, BigDecimal.ROUND_HALF_UP);
-                value = value.stripTrailingZeros();
+                if (bd2.compareTo(BigDecimal.ZERO) == 0){
+                    showAlertDialog();
+                } else  {
+                    value = bd1.divide(bd2, 14, BigDecimal.ROUND_HALF_UP);
+                    value = value.stripTrailingZeros();
+                }
             }
 
-            Intent intent = new Intent(this, SecondActivity.class);
-            intent.putExtra("RESULT",value);
+        Intent intent = new Intent(this, SecondActivity.class);
+        intent.putExtra("RESULT",value);
 
-            startActivity(intent);
+        startActivity(intent);
 
         }
     }
 
+    private void showAlertDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("0で割っています");
+
+        alertDialogBuilder.setPositiveButton("わかった",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        Log.d("UI_PARTS", "了承");
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }
