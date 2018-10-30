@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }else if (v.getId() == R.id.button4) {
                 if (bd2.compareTo(BigDecimal.ZERO) == 0){
                     showAlertDialog();
+                    return;
                 } else  {
                     value = bd1.divide(bd2, 14, BigDecimal.ROUND_HALF_UP);
                     value = value.stripTrailingZeros();
@@ -83,13 +84,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showAlertDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("0で割っています");
+        alertDialogBuilder.setMessage("ゼロでは除算できません");
 
-        alertDialogBuilder.setPositiveButton("わかった",
+        alertDialogBuilder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.d("UI_PARTS", "了承");
+                        Log.d("UI-PARTS", "0除算");
                     }
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
